@@ -1,9 +1,14 @@
+/** @jsxImportSource @emotion/react */
+
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+
+import { css } from '@emotion/react'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const color = 'white'
 
 export default function Home() {
     return (
@@ -20,24 +25,33 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={styles.main}>
-                <div className={styles.description}>
+            <main>
+                <div
+                    css={css`
+                        padding: 32px;
+                        background-color: hotpink;
+                        font-size: 24px;
+                        border-radius: 4px;
+                        &:hover {
+                            color: ${color};
+                        }
+                    `}
+                >
                     <p>Best offers EU</p>
                 </div>
 
-                <div className={styles.center}>Marketplace</div>
+                <div>Marketplace</div>
 
-                <div className={styles.grid}>
+                <div>
                     <a
                         href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <h2 className={inter.className}>
+                        <h2>
                             Docs <span>-&gt;</span>
                         </h2>
-                        <p className={inter.className}>
+                        <p>
                             Find in-depth information about Next.js features
                             and&nbsp;API.
                         </p>
@@ -45,14 +59,13 @@ export default function Home() {
 
                     <a
                         href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <h2 className={inter.className}>
+                        <h2>
                             Learn <span>-&gt;</span>
                         </h2>
-                        <p className={inter.className}>
+                        <p>
                             Learn about Next.js in an interactive course
                             with&nbsp;quizzes!
                         </p>
@@ -60,14 +73,13 @@ export default function Home() {
 
                     <a
                         href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <h2 className={inter.className}>
+                        <h2>
                             Templates <span>-&gt;</span>
                         </h2>
-                        <p className={inter.className}>
+                        <p>
                             Discover and deploy boilerplate example
                             Next.js&nbsp;projects.
                         </p>
@@ -75,14 +87,13 @@ export default function Home() {
 
                     <a
                         href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <h2 className={inter.className}>
+                        <h2>
                             Deploy <span>-&gt;</span>
                         </h2>
-                        <p className={inter.className}>
+                        <p>
                             Instantly deploy your Next.js site to a shareable
                             URL with&nbsp;Vercel.
                         </p>
