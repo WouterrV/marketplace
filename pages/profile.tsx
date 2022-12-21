@@ -5,7 +5,8 @@ import { useUserData } from '@nhost/react'
 // React, next
 import React from 'react'
 
-const UserDetails = () => {}
+// Marketplace components
+import TopMenu from '../components/TopMenu'
 
 const UPDATE_USER_MUTATION = gql`
     mutation ($id: uuid!, $displayName: String!, $metadata: jsonb) {
@@ -61,6 +62,8 @@ const Profile = () => {
 
     return (
         <div>
+            <TopMenu />
+
             <form onSubmit={updateUserProfile}>
                 <label htmlFor="firstName">First name</label>
                 <input
