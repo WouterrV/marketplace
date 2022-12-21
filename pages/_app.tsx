@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 
 // Nhost
 import { NhostProvider, NhostClient } from '@nhost/react'
+import { NhostApolloProvider } from '@nhost/react-apollo'
 
 const nhost = new NhostClient({
     subdomain: process.env.NEXT_PUBLIC_REACT_APP_NHOST_SUBDOMAIN,
@@ -12,7 +13,9 @@ const nhost = new NhostClient({
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <NhostProvider nhost={nhost}>
-            <Component {...pageProps} />
+            <NhostApolloProvider nhost={nhost}>
+                <Component {...pageProps} />
+            </NhostApolloProvider>
         </NhostProvider>
     )
 }

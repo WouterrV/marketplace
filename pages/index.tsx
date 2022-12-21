@@ -16,6 +16,7 @@ import Dialog from '@mui/material/Dialog'
 import SignUp from '../components/SignUp'
 import SignIn from '../components/SignIn'
 import ResetPassword from '../components/ResetPassword'
+import UserDetails from '../components/UserDetails'
 
 // Variables
 const color = 'white'
@@ -93,6 +94,7 @@ export default function Home() {
                 {loginModalTab === 'signup' && <SignUp />}
                 {loginModalTab === 'signin' && <SignIn />}
                 {loginModalTab === 'resetpassword' && <ResetPassword />}
+                <UserDetails />
             </Dialog>
         </>
     )
