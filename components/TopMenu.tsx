@@ -50,7 +50,9 @@ function TopMenu() {
                     },
                 }}
             >
-                <h1>Marketplace</h1>
+                <Link href="/">
+                    <h1>Marketplace</h1>
+                </Link>
                 (login, see favourite listings)
                 <Button variant="text" onClick={handleMenuLoginButtonClick}>
                     Login
