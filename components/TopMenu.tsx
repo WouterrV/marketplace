@@ -3,8 +3,9 @@
 // Variables
 const color = 'white'
 
-// React
+// React, Next
 import * as React from 'react'
+import Link from 'next/link'
 
 // MUI
 import Button from '@mui/material/Button'
@@ -54,6 +55,11 @@ function TopMenu() {
                 <Button variant="text" onClick={handleMenuLoginButtonClick}>
                     Login
                 </Button>
+                <Link href="newListing">
+                    <Button variant="text" onClick={handleMenuLoginButtonClick}>
+                        New Listing
+                    </Button>
+                </Link>
                 <form onSubmit={handleSearch}>
                     <input type="text" placeholder="Search" />
                     <button>Search</button>
