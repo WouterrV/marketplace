@@ -16,17 +16,38 @@ import Dialog from '@mui/material/Dialog'
 import TopMenu from '../components/TopMenu'
 
 // nhost
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 
 const GET_LISTINGS = gql`
-  query GetListings() {
-    listings{
-      *
+    query GetListings {
+        listings {
+            title
+            description
+            id
+        }
     }
-  }
 `
 
 export default function Home() {
+    const {
+        loading,
+        data: listingsData,
+        error: listingsDataError,
+    } = useQuery(GET_LISTINGS)
+
+    console.log('listingsData: ', listingsData)
+
+    let Listings = listingsData?.listings.map((d: any) => {
+        return (
+            <div key={d.id}>
+                <h2>{d.title}</h2>
+                <p>{d.description}</p>
+            </div>
+        )
+    })
+
+    console.log('Listings: ', Listings)
+
     return (
         <>
             <Head>
@@ -46,6 +67,7 @@ export default function Home() {
 
             <main>
                 <p>Recent/relevant for you offers go here</p>
+                {Listings}
             </main>
         </>
     )
