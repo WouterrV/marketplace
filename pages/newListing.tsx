@@ -9,28 +9,11 @@ import React from 'react'
 // Marketplace components
 import TopMenu from '../components/TopMenu'
 
-const CREATE_LISTING = gql`
-    mutation createListing(
-        $user: uuid!
-        $description: String!
-        $title: String!
-    ) {
-        insert_listings_one(
-            object: { description: $description, title: $title, user: $user }
-        ) {
-            # what to get back from the server
-            user
-            title
-            id
-            description
-        }
-    }
-`
+// [] post data to API url
+// [] display status
+// [] do sth for images
 
 const NewListing = () => {
-    const [mutateListing, { loading: creatingListing }] =
-        useMutation(CREATE_LISTING)
-
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
 
@@ -38,13 +21,6 @@ const NewListing = () => {
 
     let submitListing = (e: React.FormEvent) => {
         e.preventDefault()
-        mutateListing({
-            variables: {
-                user: serverUser?.id,
-                description,
-                title,
-            },
-        })
     }
 
     return (

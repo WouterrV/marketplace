@@ -10,12 +10,19 @@ const nhost = new NhostClient({
     region: process.env.NEXT_PUBLIC_REACT_APP_NHOST_REGION,
 })
 
+// TanStack Query
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <NhostProvider nhost={nhost}>
-            <NhostApolloProvider nhost={nhost}>
-                <Component {...pageProps} />
-            </NhostApolloProvider>
-        </NhostProvider>
+        <QueryClientProvider client={queryClient}>
+            <NhostProvider nhost={nhost}>
+                <NhostApolloProvider nhost={nhost}>
+                    <Component {...pageProps} />
+                </NhostApolloProvider>
+            </NhostProvider>
+        </QueryClientProvider>
     )
 }
