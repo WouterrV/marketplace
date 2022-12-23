@@ -45,36 +45,14 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>,
 ) {
-    let userId = ''
-    let title = ''
-    let description = ''
-    let nhostToken = ''
-
     const bodyObject = JSON.parse(req.body)
 
-    try {
-        const {
-            title: reqTitle,
-            description: reqDescription,
-            userId: reqUserId,
-            nhostToken: reqNhostToken,
-        } = bodyObject
-
-        userId = reqUserId
-        title = reqTitle
-        description = reqDescription
-        nhostToken = reqNhostToken
-    } catch (error) {
-        console.log('error parsing request body', error)
-    }
-
-    console.log(
-        'Title, description, userId, nhostToken from request body:',
-        title,
-        description,
-        userId,
-        nhostToken,
-    )
+    const {
+        title = '',
+        description = '',
+        userId = '',
+        nhostToken = '',
+    } = bodyObject
 
     // Generate a slug
     const newUuid = uuidv4()
