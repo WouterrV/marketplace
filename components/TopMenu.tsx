@@ -7,6 +7,9 @@ const color = 'white'
 import * as React from 'react'
 import Link from 'next/link'
 
+// nhost
+import { useSignOut } from '@nhost/react'
+
 // MUI
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -25,6 +28,8 @@ function TopMenu() {
     const [loginModalTab, setLoginModalTab] = React.useState<
         'signup' | 'signin' | 'resetpassword'
     >('signup')
+
+    const { signOut } = useSignOut()
 
     function handleMenuLoginButtonClick(
         event: React.MouseEvent<HTMLButtonElement>,
@@ -78,6 +83,7 @@ function TopMenu() {
                 <Button onClick={() => setLoginModalTab('signin')}>
                     Sign in
                 </Button>
+                <Button onClick={signOut}>Sign out</Button>
                 <Button onClick={() => setLoginModalTab('resetpassword')}>
                     Reset password
                 </Button>
