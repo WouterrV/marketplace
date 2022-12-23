@@ -25,14 +25,21 @@ const CREATE_LISTING = gql`
         $user: uuid!
         $description: String!
         $title: String!
+        $slug: String!
     ) {
         insert_listings_one(
-            object: { description: $description, title: $title, user: $user }
+            object: {
+                description: $description
+                title: $title
+                user: $user
+                slug: $slug
+            }
         ) {
             user
             title
             id
             description
+            slug
         }
     }
 `
@@ -59,9 +66,9 @@ export default async function handler(
 
     // Parse the title: only URL friendly characters
     const titleWithoutSpacesOrSpecialCharacters = title
-        .replace(' ', '-')
+        .replaceAll(' ', '-')
         // if a char is not in the range of a-Z etc, replace it with an empty string
-        .replace(/[^a-zA-Z0-9-_]/g, '')
+        .replaceAll(/[^a-zA-Z0-9-_]/g, '')
 
     const slug = newUuid + '-' + titleWithoutSpacesOrSpecialCharacters
 
@@ -84,13 +91,14 @@ export default async function handler(
             user: userId,
             description: description || 'some description',
             title: title || 'some title',
+            slug: slug || 'some slug',
         })
         .then((data) => {
             console.log('graphql request succesful.', data)
+            res.status(200).json({ name: 'succesfully submitted' })
         })
         .catch((error) => {
             console.log('graphql request failed.', error)
+            res.status(500).json(error)
         })
-
-    res.status(200).json({ name: 'John Doe' })
 }
