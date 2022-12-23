@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 // [x] receive an object
 // [x] create a slug
-// [] post it to nhost
+// [x] post it to nhost
 // [] return 200
 
 const CREATE_LISTING = gql`
@@ -29,7 +29,6 @@ const CREATE_LISTING = gql`
         insert_listings_one(
             object: { description: $description, title: $title, user: $user }
         ) {
-            # what to get back from the server
             user
             title
             id
@@ -42,58 +41,78 @@ type Data = {
     name: string
 }
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>,
 ) {
-    let user, title, description
+    let userId = ''
+    let title = ''
+    let description = ''
+    let nhostToken = ''
 
-    // Parse the request
+    const bodyObject = JSON.parse(req.body)
 
     try {
         const {
             title: reqTitle,
             description: reqDescription,
-            user: reqUser,
-        } = JSON.parse(req.body)
-        user = reqUser
+            userId: reqUserId,
+            nhostToken: reqNhostToken,
+        } = bodyObject
+
+        userId = reqUserId
         title = reqTitle
         description = reqDescription
+        nhostToken = reqNhostToken
     } catch (error) {
-        console.log('error', error)
+        console.log('error parsing request body', error)
     }
 
-    console.log('title, description', title, description)
+    console.log(
+        'Title, description, userId, nhostToken from request body:',
+        title,
+        description,
+        userId,
+        nhostToken,
+    )
 
     // Generate a slug
-    const newUuid = uuidv4() // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+    const newUuid = uuidv4()
 
     // Parse the title: only URL friendly characters
     const titleWithoutSpacesOrSpecialCharacters = title
         .replace(' ', '-')
+        // if a char is not in the range of a-Z etc, replace it with an empty string
         .replace(/[^a-zA-Z0-9-_]/g, '')
 
     const slug = newUuid + '-' + titleWithoutSpacesOrSpecialCharacters
 
+    // Set the token to be used that we'll use in subsequent requests
+    console.warn('access token: ', nhostToken)
+    // nhost.functions.setAccessToken(nhostToken)
+
+    // Doesnt work - regular sign in?
+
+    // see https://docs.nhost.io/reference/javascript/auth/sign-in
+    await nhost.auth.signIn({
+        email: process.env.NEXT_PUBLIC_NHOST_EMAIL!,
+        password: process.env.NEXT_PUBLIC_NHOST_PASSWORD!,
+    })
+
+    // This works! But I want to use the token from the request body
+
     nhost.graphql
         .request(CREATE_LISTING, {
-            user: user?.id,
+            user: userId,
             description: description || 'some description',
             title: title || 'some title',
         })
         .then((data) => {
             console.log('graphql request succesful.', data)
         })
-
-    // const [mutateListing, { loading: creatingListing }] =
-
-    // mutateListing({
-    //     variables: {
-    //         user: user?.id,
-    //         description,
-    //         title,
-    //     },
-    // })
+        .catch((error) => {
+            console.log('graphql request failed.', error)
+        })
 
     res.status(200).json({ name: 'John Doe' })
 }

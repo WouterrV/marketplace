@@ -1,5 +1,6 @@
-// Next
+// Next, React
 import type { AppProps } from 'next/app'
+import React from 'react'
 
 // Nhost
 import { NhostProvider, NhostClient } from '@nhost/react'
@@ -15,14 +16,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
+// nhost context so we can ask nhost for getting token
+export const NhostContext = React.createContext(nhost)
+
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <QueryClientProvider client={queryClient}>
-            <NhostProvider nhost={nhost}>
-                <NhostApolloProvider nhost={nhost}>
-                    <Component {...pageProps} />
-                </NhostApolloProvider>
-            </NhostProvider>
-        </QueryClientProvider>
+        <NhostContext.Provider value={nhost}>
+            <QueryClientProvider client={queryClient}>
+                <NhostProvider nhost={nhost}>
+                    <NhostApolloProvider nhost={nhost}>
+                        <Component {...pageProps} />
+                    </NhostApolloProvider>
+                </NhostProvider>
+            </QueryClientProvider>
+        </NhostContext.Provider>
     )
 }
