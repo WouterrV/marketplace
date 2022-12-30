@@ -14,10 +14,15 @@ const nhost = new NhostClient({
 // TanStack Query
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+// Chakra
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+
 const queryClient = new QueryClient()
 
 // nhost context so we can ask nhost for getting token
 export const NhostContext = React.createContext(nhost)
+
+const chakraTheme = extendTheme()
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -25,7 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <QueryClientProvider client={queryClient}>
                 <NhostProvider nhost={nhost}>
                     <NhostApolloProvider nhost={nhost}>
-                        <Component {...pageProps} />
+                        <ChakraProvider theme={chakraTheme}>
+                            <Component {...pageProps} />
+                        </ChakraProvider>
                     </NhostApolloProvider>
                 </NhostProvider>
             </QueryClientProvider>
