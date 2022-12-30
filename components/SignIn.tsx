@@ -32,13 +32,7 @@ const SignIn = () => {
             {isSuccess && <p>Succesfully signed in</p>}
             {isError && <p>{error?.message}</p>}
             <div className="sm:rounded-xl sm:shadow-md sm:border border-opacity-50 sm:bg-white px-4 sm:px-8 py-12 flex flex-col items-center">
-                <div className="h-14">
-                    <img
-                        src={process.env.PUBLIC_URL + 'logo.svg'}
-                        alt="logo"
-                        className="w-full h-full"
-                    />
-                </div>
+                <div className="h-14"></div>
 
                 {needsEmailVerification ? (
                     <p>
