@@ -8,10 +8,6 @@ import * as React from 'react'
 // Styling
 import { css } from '@emotion/react'
 
-// MUI
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-
 // Marketplace components
 import TopMenu from '../components/TopMenu'
 
