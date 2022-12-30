@@ -17,7 +17,7 @@ import ResetPassword from '../components/ResetPassword'
 import UserDetails from '../components/UserDetails'
 
 // Chakra
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, ButtonGroup, Flex } from '@chakra-ui/react'
 import {
     Modal,
     ModalOverlay,
@@ -27,6 +27,10 @@ import {
     ModalBody,
     ModalCloseButton,
 } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+
+// Icons
+import { EnvelopeIcon } from '@heroicons/react/24/outline'
 
 function TopMenu() {
     const [showLoginModal, setShowLoginModal] = React.useState(false)
@@ -51,41 +55,58 @@ function TopMenu() {
 
     return (
         <React.Fragment>
-            <div
-                css={{
-                    padding: '32px',
-                    backgroundColor: 'turquoise',
-                    '&:hover': {
-                        color: color,
-                    },
-                }}
+            <Box
+                display="flex"
+                justifyContent={'space-between'}
+                alignItems="center"
+                backgroundColor={'bluegray.800'}
+                color="white"
+                height={16}
+                px={4}
             >
-                <Link href="/">
-                    <h1>Marketplace</h1>
-                </Link>
-                (login, see favourite listings)
-                <Button variant="solid" onClick={handleMenuLoginButtonClick}>
-                    Login
-                </Button>
-                <Link href="newListing">
+                <Flex
+                    className="beginContent"
+                    alignItems={'center'}
+                    columnGap="2"
+                >
+                    <Link href="/">
+                        <h1>BuyHive.eu</h1>
+                    </Link>
+
+                    <Link href="messages">
+                        <Button
+                            variant="ghost"
+                            colorScheme="bluegray"
+                            onClick={handleMenuLoginButtonClick}
+                        >
+                            <EnvelopeIcon className="h-6 w-6 text-blue-500" />
+                            Messages
+                        </Button>
+                    </Link>
+                </Flex>
+                <Flex className="lastContent" columnGap={'2'}>
+                    <Link href="newListing">
+                        <Button
+                            variant="solid"
+                            colorScheme="indigo"
+                            onClick={handleMenuLoginButtonClick}
+                        >
+                            New Listing
+                        </Button>
+                    </Link>
                     <Button
-                        variant="solid"
+                        variant="outline"
                         onClick={handleMenuLoginButtonClick}
                     >
-                        New Listing
+                        Login
                     </Button>
-                </Link>
-                <form onSubmit={handleSearch}>
-                    <input type="text" placeholder="Search" />
-                    <button>Search</button>
-                </form>
-            </div>
+                </Flex>
+            </Box>
             <Modal
                 onClose={() => setShowLoginModal(false)}
                 isOpen={showLoginModal}
             >
                 <ModalContent>
-                    <div>Modal goes here</div>
                     <Button onClick={() => setLoginModalTab('signup')}>
                         Sign up
                     </Button>
