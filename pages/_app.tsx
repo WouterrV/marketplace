@@ -2,6 +2,9 @@
 import type { AppProps } from 'next/app'
 import React from 'react'
 
+// Marketplace components
+import Layout from '../components/Layout'
+
 // Nhost
 import { NhostProvider, NhostClient } from '@nhost/react'
 import { NhostApolloProvider } from '@nhost/react-apollo'
@@ -60,7 +63,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <NhostProvider nhost={nhost}>
                     <NhostApolloProvider nhost={nhost}>
                         <ChakraProvider theme={chakraTheme}>
-                            <Component {...pageProps} />
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
                         </ChakraProvider>
                     </NhostApolloProvider>
                 </NhostProvider>

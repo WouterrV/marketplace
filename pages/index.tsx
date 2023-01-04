@@ -46,25 +46,8 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>Marketplace</title>
-                <meta
-                    name="description"
-                    content="Buy and sell second-hand items within the EU."
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <TopMenu />
-
-            <main>
-                <p>Recent/relevant for you offers go here</p>
-                {Listings}
-            </main>
+            <p>Recent/relevant for you offers go here</p>
+            {Listings}
         </>
     )
 }
