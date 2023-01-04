@@ -27,6 +27,7 @@ import {
     ModalBody,
     ModalCloseButton,
 } from '@chakra-ui/react'
+
 import { Box } from '@chakra-ui/react'
 
 // Icons
@@ -36,7 +37,7 @@ function TopMenu() {
     const [showLoginModal, setShowLoginModal] = React.useState(false)
     const [loginModalTab, setLoginModalTab] = React.useState<
         'signup' | 'signin' | 'resetpassword'
-    >('signup')
+    >('signin')
 
     const { signOut } = useSignOut()
 
@@ -86,11 +87,7 @@ function TopMenu() {
                 </Flex>
                 <Flex className="lastContent" columnGap={'2'}>
                     <Link href="newListing">
-                        <Button
-                            variant="solid"
-                            colorScheme="indigo"
-                            onClick={handleMenuLoginButtonClick}
-                        >
+                        <Button variant="solid" colorScheme="indigo">
                             New Listing
                         </Button>
                     </Link>
@@ -106,17 +103,22 @@ function TopMenu() {
                 onClose={() => setShowLoginModal(false)}
                 isOpen={showLoginModal}
             >
-                <ModalContent>
-                    <Button onClick={() => setLoginModalTab('signup')}>
-                        Sign up
-                    </Button>
-                    <Button onClick={() => setLoginModalTab('signin')}>
-                        Sign in
-                    </Button>
-                    <Button onClick={signOut}>Sign out</Button>
-                    <Button onClick={() => setLoginModalTab('resetpassword')}>
-                        Reset password
-                    </Button>
+                <ModalContent padding={8}>
+                    <Flex direction="row" justifyContent={'space-evenly'}>
+                        <Button onClick={() => setLoginModalTab('signup')}>
+                            Sign up
+                        </Button>
+                        <Button onClick={() => setLoginModalTab('signin')}>
+                            Sign in
+                        </Button>
+                        <Button onClick={signOut}>Sign out</Button>
+                        <Button
+                            onClick={() => setLoginModalTab('resetpassword')}
+                        >
+                            Reset password
+                        </Button>
+                    </Flex>
+
                     {loginModalTab === 'signup' && <SignUp />}
                     {loginModalTab === 'signin' && <SignIn />}
                     {loginModalTab === 'resetpassword' && <ResetPassword />}
