@@ -75,11 +75,7 @@ function TopMenu() {
                     </Link>
 
                     <Link href="messages">
-                        <Button
-                            variant="ghost"
-                            colorScheme="bluegray"
-                            onClick={handleMenuLoginButtonClick}
-                        >
+                        <Button variant="ghost" colorScheme="bluegray">
                             <EnvelopeIcon className="h-6 w-6 text-blue-500" />
                             Messages
                         </Button>
@@ -104,15 +100,27 @@ function TopMenu() {
                 isOpen={showLoginModal}
             >
                 <ModalContent padding={8}>
-                    <Flex direction="row" justifyContent={'space-evenly'}>
+                    <Flex
+                        direction="row"
+                        justifyContent={'space-evenly'}
+                        columnGap={4}
+                    >
                         <Button onClick={() => setLoginModalTab('signup')}>
                             Sign up
                         </Button>
                         <Button onClick={() => setLoginModalTab('signin')}>
                             Sign in
                         </Button>
-                        <Button onClick={signOut}>Sign out</Button>
                         <Button
+                            variant="outline"
+                            colorScheme="red"
+                            onClick={signOut}
+                        >
+                            Sign out
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            colorScheme="red"
                             onClick={() => setLoginModalTab('resetpassword')}
                         >
                             Reset password

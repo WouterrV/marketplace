@@ -1,6 +1,13 @@
 import { useState } from 'react'
 
-import Input from './Input'
+// Chakra
+import {
+    Input,
+    FormControl,
+    FormLabel,
+    FormHelperText,
+    Button,
+} from '@chakra-ui/react'
 
 // nHost
 import { useSignUpEmailPassword } from '@nhost/react'
@@ -47,16 +54,16 @@ const SignUp = () => {
                 <form onSubmit={handleSubmit} className="w-full">
                     <div className="mt-12 flex flex-col items-center space-y-6">
                         <div className="w-full flex gap-6">
+                            <FormLabel>First Name</FormLabel>
                             <Input
-                                label="First name"
                                 value={firstName}
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>,
                                 ) => setFirstName(e.target.value)}
                                 required
                             />
+                            <FormLabel>Last Name</FormLabel>
                             <Input
-                                label="Last name"
                                 value={lastName}
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>,
@@ -64,18 +71,18 @@ const SignUp = () => {
                                 required
                             />
                         </div>
+                        <FormLabel>Email</FormLabel>
                         <Input
                             type="email"
-                            label="Email address"
                             value={email}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>,
                             ) => setEmail(e.target.value)}
                             required
                         />
+                        <FormLabel>Password</FormLabel>
                         <Input
                             type="password"
-                            label="Create password"
                             value={password}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>,
@@ -84,12 +91,12 @@ const SignUp = () => {
                         />
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
                         className="mt-6 w-full font-medium inline-flex justify-center items-center rounded-md p-3 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed  disabled:hover:bg-blue-600 disabled:hover:border-bg-600 transition-colors"
                     >
                         Create account
-                    </button>
+                    </Button>
                 </form>
             </div>
         </div>

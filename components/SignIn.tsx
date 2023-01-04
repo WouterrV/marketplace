@@ -7,6 +7,15 @@ import Input from './Input'
 // nhost
 import { useSignInEmailPassword } from '@nhost/react'
 
+// Chakra
+import {
+    Input as ChakraInput,
+    FormControl,
+    FormLabel,
+    FormHelperText,
+    Button,
+} from '@chakra-ui/react'
+
 const SignIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -40,34 +49,37 @@ const SignIn = () => {
                         link to verify your email.
                     </p>
                 ) : (
-                    <form onSubmit={handleOnSubmit}>
-                        <Input
-                            type="email"
-                            label="Email address"
-                            value={email}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>,
-                            ) => setEmail(e.target.value)}
-                            disabled={disableForm}
-                            required
-                        />
-                        <Input
-                            type="password"
-                            label="Password"
-                            value={password}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>,
-                            ) => setPassword(e.target.value)}
-                            disabled={disableForm}
-                            required
-                        />
+                    !disableForm && (
+                        <form onSubmit={handleOnSubmit}>
+                            <FormLabel>Email address</FormLabel>
+                            <ChakraInput
+                                type="email"
+                                value={email}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>,
+                                ) => setEmail(e.target.value)}
+                                disabled={disableForm}
+                                required
+                            />
 
-                        <button type="submit" disabled={disableForm}>
-                            {isLoading ? 'Loading' : 'Sign in'}
-                        </button>
+                            <FormLabel>Password</FormLabel>
+                            <ChakraInput
+                                type="password"
+                                value={password}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>,
+                                ) => setPassword(e.target.value)}
+                                disabled={disableForm}
+                                required
+                            />
 
-                        {isError ? <p>{error?.message}</p> : null}
-                    </form>
+                            <Button type="submit" disabled={disableForm}>
+                                {isLoading ? 'Loading' : 'Sign in'}
+                            </Button>
+
+                            {isError ? <p>{error?.message}</p> : null}
+                        </form>
+                    )
                 )}
             </div>
         </div>

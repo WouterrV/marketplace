@@ -9,6 +9,17 @@ import React from 'react'
 // Tanstack Query
 import { useQuery, useMutation as useRQMutation } from '@tanstack/react-query'
 
+// Chakra
+import {
+    Box,
+    Button,
+    Flex,
+    Heading,
+    Input,
+    FormLabel,
+    Stack,
+} from '@chakra-ui/react'
+
 // Marketplace components
 import TopMenu from '../components/TopMenu'
 import { NhostContext } from './_app'
@@ -49,26 +60,25 @@ const NewListing = () => {
 
     return (
         <>
-            <TopMenu />
             <h1>New Listing</h1>
             <form onSubmit={handleFormSubmit}>
-                <label htmlFor="title">Title</label>
-                <input
+                <FormLabel htmlFor="title">Title</FormLabel>
+                <Input
                     type="text"
                     name="title"
                     id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <label htmlFor="description">Description</label>
-                <input
+                <FormLabel htmlFor="description">Description</FormLabel>
+                <Input
                     type="text"
                     name="description"
                     id="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                <button type="submit">Submit</button>
+                <Button type="submit">Submit</Button>
             </form>
         </>
     )
