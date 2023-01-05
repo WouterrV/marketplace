@@ -9,7 +9,20 @@ import * as React from 'react'
 import { css } from '@emotion/react'
 
 // Marketplace components
-import TopMenu from '../components/TopMenu'
+import HomepageOfferCard from '../components/HomepageOfferCard'
+
+// Chakra
+import {
+    Box,
+    Button,
+    Flex,
+    Heading,
+    Input,
+    FormLabel,
+    FormControl,
+    Stack,
+    Text,
+} from '@chakra-ui/react'
 
 // nhost
 import { gql, useQuery } from '@apollo/client'
@@ -35,19 +48,32 @@ export default function Home() {
 
     let Listings = listingsData?.listings.map((d: any) => {
         return (
-            <div key={d.id}>
-                <h2>{d.title}</h2>
-                <p>{d.description}</p>
-            </div>
+            <HomepageOfferCard
+                key={d.id}
+                description={d.description}
+                title={d.title}
+                image={d.image || 'https://loremflickr.com/320/240'}
+                price={d.price}
+            />
         )
     })
 
     console.log('Listings: ', Listings)
 
     return (
-        <>
-            <p>Recent/relevant for you offers go here</p>
-            {Listings}
-        </>
+        <Flex className="homepage" flexDirection={'column'} py={4} px={4}>
+            <Text fontSize="2xl" mb={2}>
+                Offers picked just for you
+            </Text>
+
+            <Flex
+                flexDirection={'row'}
+                columnGap={5}
+                rowGap={5}
+                flexWrap="wrap"
+            >
+                {Listings}
+            </Flex>
+        </Flex>
     )
 }

@@ -17,7 +17,9 @@ import {
     Heading,
     Input,
     FormLabel,
+    FormControl,
     Stack,
+    Text,
 } from '@chakra-ui/react'
 
 // Marketplace components
@@ -59,28 +61,42 @@ const NewListing = () => {
     }
 
     return (
-        <>
-            <h1>New Listing</h1>
-            <form onSubmit={handleFormSubmit}>
-                <FormLabel htmlFor="title">Title</FormLabel>
-                <Input
-                    type="text"
-                    name="title"
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <FormLabel htmlFor="description">Description</FormLabel>
-                <Input
-                    type="text"
-                    name="description"
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-                <Button type="submit">Submit</Button>
-            </form>
-        </>
+        <Flex direction={'column'} className="page" px={4} py={4}>
+            <Text fontSize="2xl">New Listing</Text>
+
+            {/* Formcontainer for max width */}
+            <Flex
+                className="formContainer"
+                maxWidth="500px"
+                direction={'column'}
+                alignItems="stretch"
+            >
+                <form onSubmit={handleFormSubmit}>
+                    <FormLabel htmlFor="title">Title</FormLabel>
+                    <Input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <FormControl>
+                        <FormLabel htmlFor="description">Description</FormLabel>
+                        <Input
+                            type="text"
+                            name="description"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </FormControl>
+
+                    <Button mt={2} type="submit">
+                        Submit
+                    </Button>
+                </form>
+            </Flex>
+        </Flex>
     )
 }
 

@@ -5,6 +5,9 @@ import Head from 'next/head'
 // Marketplace components
 import TopMenu from '../components/TopMenu'
 
+// Chakra
+import { Flex } from '@chakra-ui/react'
+
 const Layout = ({
     children,
 }: {
@@ -25,9 +28,15 @@ const Layout = ({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <TopMenu />
-
-            <main>{children}</main>
+            <Flex
+                className="app"
+                direction="column"
+                minHeight="100vh"
+                backgroundColor="gray.300"
+            >
+                <TopMenu />
+                {children}
+            </Flex>
         </>
     )
 }
