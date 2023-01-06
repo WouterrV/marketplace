@@ -54,6 +54,10 @@ const chakraTheme = extendTheme({
             900: '#312e81',
         },
     },
+    fonts: {
+        heading: 'Inter',
+        body: 'Inter',
+    },
 })
 
 export default function App({ Component, pageProps }: AppProps) {

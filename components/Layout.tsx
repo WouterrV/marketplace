@@ -26,6 +26,8 @@ const Layout = ({
                     content="width=device-width, initial-scale=1"
                 />
                 <link rel="icon" href="/favicon.ico" />
+                {/* Used in TailwindUI */}
+                <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
             </Head>
 
             <Flex
