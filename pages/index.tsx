@@ -33,6 +33,7 @@ const GET_LISTINGS = gql`
             title
             description
             id
+            slug
         }
     }
 `
@@ -54,11 +55,10 @@ export default function Home() {
                 title={d.title}
                 image={d.image || 'https://loremflickr.com/320/240'}
                 price={d.price}
+                slug={d.slug}
             />
         )
     })
-
-    console.log('Listings: ', Listings)
 
     return (
         <Flex className="homepage" flexDirection={'column'} py={4} px={4}>
