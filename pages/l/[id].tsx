@@ -1,7 +1,9 @@
 // Next, React
 import React from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
+// Apollo
 import { gql, useQuery } from '@apollo/client'
 
 const GET_LISTING = gql`
@@ -10,10 +12,14 @@ const GET_LISTING = gql`
             title
             description
             id
+            images
             slug
         }
     }
 `
+
+// Chakra
+import { Flex, Text, Heading } from '@chakra-ui/react'
 
 const OneListing = () => {
     const router = useRouter()
@@ -24,19 +30,41 @@ const OneListing = () => {
 
     const {
         loading,
-        data: { listings: listingsReceived },
+        data,
         error: listingsDataError,
     } = useQuery(GET_LISTING, {
         variables: { slug },
     })
 
-    let listingData = listingsReceived[0]
+    console.log('data: ', data)
+
+    let listingData =
+        data && data?.listings && data?.listings.length > 0
+            ? data['listings'][0]
+            : null
+
+    let imagesArr = []
+
+    try {
+        if (listingData?.images) {
+            imagesArr = JSON.parse(listingData?.images)
+        }
+    } catch (e) {
+        console.error('error parsing images: ', e)
+    }
+
+    // const Images = imagesArr.map((url: string) => {
+    //     console.log('one image url: ', url)
+    //     return <Image src={url} alt="" key={url} />
+    // })
 
     return (
-        <div>
-            <h2>{listingData.title}</h2>
-            <p>{listingData.description}</p>
-        </div>
+        <Flex className="homepage" flexDirection={'column'} py={4} px={4}>
+            <Heading fontSize="xl">{listingData?.title}</Heading>
+            <Text color={'blue.500'} fontSize="sm">
+                {listingData?.description}
+            </Text>
+        </Flex>
     )
 }
 
