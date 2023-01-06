@@ -10,7 +10,7 @@ type THomePageOfferCardProps = {
     title: string
     description: string
     image: string
-    price: number
+    price?: number
 }
 
 const HomepageOfferCard = ({
@@ -57,8 +57,10 @@ const HomepageOfferCard = ({
                 flexDirection="column"
                 overflow="hidden"
             >
-                <Text fontSize="xl">{title}</Text>
-                <Text color={'blue.500'}>€{price / 100}</Text>
+                <Text fontSize="sm">{title}</Text>
+                <Text color={'blue.500'} fontSize="sm">
+                    €{price ? price / 100 : '99,99'}
+                </Text>
             </Flex>
         </Flex>
     )
