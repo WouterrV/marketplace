@@ -74,7 +74,7 @@ function TopMenu() {
                         <h1>BuyHive.eu</h1>
                     </Link>
 
-                    <Link href="messages">
+                    <Link href="/messages">
                         <Button variant="ghost" colorScheme="bluegray">
                             <EnvelopeIcon className="h-6 w-6 text-blue-500" />
                             Messages
@@ -82,7 +82,7 @@ function TopMenu() {
                     </Link>
                 </Flex>
                 <Flex className="lastContent" columnGap={'2'}>
-                    <Link href="newListing">
+                    <Link href="/newListing">
                         <Button variant="solid" colorScheme="indigo">
                             New Listing
                         </Button>
