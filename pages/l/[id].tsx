@@ -53,17 +53,50 @@ const OneListing = () => {
         console.error('error parsing images: ', e)
     }
 
-    // const Images = imagesArr.map((url: string) => {
-    //     console.log('one image url: ', url)
-    //     return <Image src={url} alt="" key={url} />
-    // })
+    console.log('imagesArr: ', imagesArr)
+
+    const Images = imagesArr.map((url: string) => {
+        return (
+            <Flex className="imageContainer" p={4} key={url}>
+                <Image src={url} alt="" width="500" height="500" />
+            </Flex>
+        )
+    })
 
     return (
-        <Flex className="homepage" flexDirection={'column'} py={4} px={4}>
-            <Heading fontSize="xl">{listingData?.title}</Heading>
-            <Text color={'blue.500'} fontSize="sm">
-                {listingData?.description}
-            </Text>
+        <Flex
+            className="page"
+            flexDirection={'column'}
+            py={4}
+            px={4}
+            justifyContent="flex-start"
+            alignItems={'center'}
+        >
+            <Flex
+                className="firstRow"
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                alignSelf="stretch"
+            >
+                <Flex
+                    className="listingCard"
+                    flexDirection="column"
+                    justifyContent="stretch"
+                    flexGrow={1}
+                    maxWidth="800px"
+                    p={4}
+                    m={4}
+                    borderRadius="lg"
+                    background="white"
+                >
+                    <Heading fontSize="xl">{listingData?.title}</Heading>
+                    <Text color={'blue.500'} fontSize="sm">
+                        {listingData?.description}
+                    </Text>
+                    {Images}
+                </Flex>
+            </Flex>
         </Flex>
     )
 }

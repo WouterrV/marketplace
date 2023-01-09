@@ -63,7 +63,7 @@ const NewListing = () => {
     return (
         <Flex
             className="page"
-            flexDirection={'column'}
+            flexDirection="column"
             justifyContent="flex-start"
             alignItems={'center'}
         >
