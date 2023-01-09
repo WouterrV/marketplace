@@ -61,40 +61,69 @@ const NewListing = () => {
     }
 
     return (
-        <Flex direction={'column'} className="page" px={4} py={4}>
-            <Text fontSize="2xl">New Listing</Text>
-
-            {/* Formcontainer for max width */}
+        <Flex
+            className="page"
+            flexDirection={'column'}
+            justifyContent="flex-start"
+            alignItems={'center'}
+        >
             <Flex
-                className="formContainer"
-                maxWidth="500px"
-                direction={'column'}
-                alignItems="stretch"
+                className="firstRow"
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                alignSelf="stretch"
             >
-                <form onSubmit={handleFormSubmit}>
-                    <FormLabel htmlFor="title">Title</FormLabel>
-                    <Input
-                        type="text"
-                        name="title"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <FormControl>
-                        <FormLabel htmlFor="description">Description</FormLabel>
-                        <Input
-                            type="text"
-                            name="description"
-                            id="description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </FormControl>
+                <Flex
+                    className="formCard"
+                    flexDirection="column"
+                    justifyContent="stretch"
+                    flexGrow={1}
+                    maxWidth="800px"
+                    p={4}
+                    m={4}
+                    borderRadius="lg"
+                    background="white"
+                >
+                    <Text fontSize="2xl">New Listing</Text>
 
-                    <Button mt={2} type="submit">
-                        Submit
-                    </Button>
-                </form>
+                    {/* Formcontainer for max width */}
+                    <Flex
+                        className="formContainer"
+                        maxWidth="500px"
+                        direction={'column'}
+                        alignItems="stretch"
+                    >
+                        <form onSubmit={handleFormSubmit}>
+                            <FormLabel htmlFor="title">Title</FormLabel>
+                            <Input
+                                type="text"
+                                name="title"
+                                id="title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                            <FormControl>
+                                <FormLabel htmlFor="description">
+                                    Description
+                                </FormLabel>
+                                <Input
+                                    type="text"
+                                    name="description"
+                                    id="description"
+                                    value={description}
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
+                                />
+                            </FormControl>
+
+                            <Button mt={2} type="submit">
+                                Submit
+                            </Button>
+                        </form>
+                    </Flex>
+                </Flex>
             </Flex>
         </Flex>
     )
