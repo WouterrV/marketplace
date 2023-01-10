@@ -25,14 +25,48 @@ import {
 // Marketplace components
 import TopMenu from '../components/TopMenu'
 import { NhostContext } from './_app'
+import Dropzone from '../components/Dropzone'
+import ImageForm from '../components/ImageForm'
 
-// [x] post data to API url
-// [] display status
-// [] do sth for images
+// [x] basic upload component
+// [] make forms for each image, upload automatically
+// [] keep state of progress of all these uploads
+// [] show server-hosted images in form
+// [] let user drag and drop
+
+const fileReducer = (
+    state: (File | null)[],
+    action: {
+        type: 'setFile'
+        payload: { position: number; file: File | null }
+    },
+) => {
+    switch (action.type) {
+        case 'setFile':
+            let newState = [...state]
+            newState[action.payload.position] = action.payload.file
+            return newState
+    }
+}
+
+const setFileFactory = (index: number, dispatch: any) => {
+    return (file: File | null) => {
+        dispatch({
+            type: 'setFile',
+            payload: { position: index, file: file },
+        })
+    }
+}
 
 const NewListing = () => {
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
+    const [filesState, filesDispatch] = React.useReducer(
+        fileReducer,
+        new Array(3).fill(null),
+    )
+
+    console.log('filesState: ', filesState)
 
     const serverUser = useUserData()
 
@@ -94,6 +128,18 @@ const NewListing = () => {
                         direction={'column'}
                         alignItems="stretch"
                     >
+                        <ImageForm
+                            file={filesState[0]}
+                            setFile={setFileFactory(0, filesDispatch)}
+                        />
+                        <ImageForm
+                            file={filesState[1]}
+                            setFile={setFileFactory(1, filesDispatch)}
+                        />
+                        <ImageForm
+                            file={filesState[2]}
+                            setFile={setFileFactory(2, filesDispatch)}
+                        />
                         <form onSubmit={handleFormSubmit}>
                             <FormLabel htmlFor="title">Title</FormLabel>
                             <Input
