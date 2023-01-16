@@ -35,8 +35,8 @@ import ImageForm from '../components/ImageForm'
 // [x] make forms for each image, upload automatically
 // [x] keep state of progress of all these uploads
 // [x] let users remove picked images
-// [] let users remove uploaded images
-// [] show server-hosted images in form
+// [ ] let users remove uploaded images
+// [x] show server-hosted images in form
 // [] let user drag and drop
 
 const getDefaultFileReducerState = () =>
@@ -49,7 +49,7 @@ const getDefaultFileReducerState = () =>
 
 type TfileReducerItem = {
     pickedFile: File | null
-    publicURL: string
+    publicURL: string | null
     uploading: boolean
 }
 
@@ -81,11 +81,15 @@ const fileReducer = (
     state: TfileReducerItem[],
     action: setPickedFileAction | setPublicURLAction | setUploadingAction,
 ) => {
+    console.log('fileReducer called with action', action)
     switch (action.type) {
         case 'setPickedFile': {
             let newState = [...state] as TfileReducerItem[]
             newState[action.payload.position].pickedFile =
                 action.payload.pickedFile
+
+            // Remove the public URL if the user picks a new file
+            newState[action.payload.position].publicURL = null
             return newState
         }
         case 'setPublicURL': {
@@ -111,6 +115,15 @@ const setFileFactory = (index: number, dispatch: any) => {
         dispatch({
             type: 'setPickedFile',
             payload: { position: index, pickedFile: file },
+        })
+    }
+}
+
+const setPublicURLFactory = (index: number, dispatch: any) => {
+    return (publicURL: string | null) => {
+        dispatch({
+            type: 'setPublicURL',
+            payload: { position: index, publicURL: publicURL },
         })
     }
 }
@@ -217,14 +230,20 @@ const NewListing = () => {
                         <ImageForm
                             file={filesState[0].pickedFile}
                             setFile={setFileFactory(0, filesDispatch)}
+                            url={filesState[0].publicURL}
+                            setUrl={setPublicURLFactory(0, filesDispatch)}
                         />
                         <ImageForm
                             file={filesState[1].pickedFile}
                             setFile={setFileFactory(1, filesDispatch)}
+                            url={filesState[1].publicURL}
+                            setUrl={setPublicURLFactory(1, filesDispatch)}
                         />
                         <ImageForm
                             file={filesState[2].pickedFile}
                             setFile={setFileFactory(2, filesDispatch)}
+                            url={filesState[2].publicURL}
+                            setUrl={setPublicURLFactory(2, filesDispatch)}
                         />
 
                         <Button mt={2} type="submit" onClick={handleFormSubmit}>

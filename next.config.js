@@ -8,6 +8,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'loremflickr.com',
             },
+            {
+                protocol: 'https',
+                hostname: '*.storage.eu-central-1.nhost.run',
+            },
         ],
     },
 }
