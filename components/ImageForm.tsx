@@ -27,20 +27,8 @@ type TImageFormProps = {
 }
 
 const ImageForm = ({ file, setFile, url, setUrl }: TImageFormProps) => {
-    // const { list } = useMultipleFilesUpload()
-
-    const {
-        add,
-        upload,
-        cancel,
-        isUploaded,
-        isUploading,
-        isError,
-        progress,
-        id,
-        bucketId,
-        name,
-    } = useFileUpload()
+    const { upload, clear, progress, cancel, files, add, isUploading } =
+        useMultipleFilesUpload()
 
     const nhost = React.useContext(NhostContext)
 
@@ -51,15 +39,26 @@ const ImageForm = ({ file, setFile, url, setUrl }: TImageFormProps) => {
     React.useEffect(() => {
         if (!file) return
 
-        console.log('file put into dropzone: ', file)
+        // console.log('file put into dropzone: ', file)
 
-        upload({ file }).then((res) => {
-            console.log('file upload result: ', JSON.parse(JSON.stringify(res)))
+        // clear old files from staging area
+        clear()
 
-            console.log(`getting public url of id: ${res.id}`)
+        add({ files: file })
 
-            const publicUrl = nhost.storage.getPublicUrl({ fileId: res.id! })
-            setUrl(publicUrl)
+        upload().then((res) => {
+            // console.log('file upload result: ', res)
+
+            res.files.forEach((uploadFileResult) => {
+                const fileId = uploadFileResult.state.context.id
+
+                // console.log(`getting public url of id: ${fileId}`)
+
+                const publicUrl = nhost.storage.getPublicUrl({
+                    fileId: fileId!,
+                })
+                setUrl(publicUrl)
+            })
 
             // console.log('publicUrl: ', publicUrl)
         })

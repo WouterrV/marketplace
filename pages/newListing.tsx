@@ -81,7 +81,7 @@ const fileReducer = (
     state: TfileReducerItem[],
     action: setPickedFileAction | setPublicURLAction | setUploadingAction,
 ) => {
-    console.log('fileReducer called with action', action)
+    // console.log('fileReducer called with action', action)
     switch (action.type) {
         case 'setPickedFile': {
             let newState = [...state] as TfileReducerItem[]
