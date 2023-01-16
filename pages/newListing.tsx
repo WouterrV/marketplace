@@ -3,6 +3,9 @@ import { gql, useMutation } from '@apollo/client'
 import { useUserData } from '@nhost/react'
 import { RecordWithTtl } from 'dns'
 
+// Utils
+import _ from 'lodash'
+
 // React, next
 import React from 'react'
 
@@ -29,44 +32,100 @@ import Dropzone from '../components/Dropzone'
 import ImageForm from '../components/ImageForm'
 
 // [x] basic upload component
-// [] make forms for each image, upload automatically
-// [] keep state of progress of all these uploads
+// [x] make forms for each image, upload automatically
+// [x] keep state of progress of all these uploads
+// [x] let users remove picked images
+// [] let users remove uploaded images
 // [] show server-hosted images in form
 // [] let user drag and drop
 
+const getDefaultFileReducerState = () =>
+    ({
+        file: null,
+        publicURL: '',
+        uploading: false,
+        pickedFile: null,
+    } as TfileReducerItem)
+
+type TfileReducerItem = {
+    pickedFile: File | null
+    publicURL: string
+    uploading: boolean
+}
+
+type setPickedFileAction = {
+    type: 'setPickedFile'
+    payload: {
+        position: number
+        pickedFile: File | null
+    }
+}
+
+type setPublicURLAction = {
+    type: 'setPublicURL'
+    payload: {
+        position: number
+        publicURL: string
+    }
+}
+
+type setUploadingAction = {
+    type: 'setUploading'
+    payload: {
+        position: number
+        uploading: boolean
+    }
+}
+
 const fileReducer = (
-    state: (File | null)[],
-    action: {
-        type: 'setFile'
-        payload: { position: number; file: File | null }
-    },
+    state: TfileReducerItem[],
+    action: setPickedFileAction | setPublicURLAction | setUploadingAction,
 ) => {
     switch (action.type) {
-        case 'setFile':
-            let newState = [...state]
-            newState[action.payload.position] = action.payload.file
+        case 'setPickedFile': {
+            let newState = [...state] as TfileReducerItem[]
+            newState[action.payload.position].pickedFile =
+                action.payload.pickedFile
             return newState
+        }
+        case 'setPublicURL': {
+            let newState = [...state] as TfileReducerItem[]
+            newState[action.payload.position].publicURL =
+                action.payload.publicURL
+            return newState
+        }
+        case 'setUploading': {
+            let newState = [...state] as TfileReducerItem[]
+            newState[action.payload.position].uploading =
+                action.payload.uploading
+            return newState
+        }
+        default:
+            console.error('invalid action type passed to fileReducer')
+            return state
     }
 }
 
 const setFileFactory = (index: number, dispatch: any) => {
     return (file: File | null) => {
         dispatch({
-            type: 'setFile',
-            payload: { position: index, file: file },
+            type: 'setPickedFile',
+            payload: { position: index, pickedFile: file },
         })
     }
 }
+
+const initialFilesState = new Array(3)
+    .fill(null)
+    .map((_) => getDefaultFileReducerState() as TfileReducerItem)
 
 const NewListing = () => {
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
     const [filesState, filesDispatch] = React.useReducer(
         fileReducer,
-        new Array(3).fill(null),
+        initialFilesState,
     )
-
-    console.log('filesState: ', filesState)
 
     const serverUser = useUserData()
 
@@ -89,7 +148,9 @@ const NewListing = () => {
         },
     })
 
-    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = (
+        event: React.FormEvent<HTMLFormElement> | React.MouseEvent,
+    ) => {
         event.preventDefault()
         mutation.mutate()
     }
@@ -128,18 +189,6 @@ const NewListing = () => {
                         direction={'column'}
                         alignItems="stretch"
                     >
-                        <ImageForm
-                            file={filesState[0]}
-                            setFile={setFileFactory(0, filesDispatch)}
-                        />
-                        <ImageForm
-                            file={filesState[1]}
-                            setFile={setFileFactory(1, filesDispatch)}
-                        />
-                        <ImageForm
-                            file={filesState[2]}
-                            setFile={setFileFactory(2, filesDispatch)}
-                        />
                         <form onSubmit={handleFormSubmit}>
                             <FormLabel htmlFor="title">Title</FormLabel>
                             <Input
@@ -163,11 +212,24 @@ const NewListing = () => {
                                     }
                                 />
                             </FormControl>
-
-                            <Button mt={2} type="submit">
-                                Submit
-                            </Button>
                         </form>
+
+                        <ImageForm
+                            file={filesState[0].pickedFile}
+                            setFile={setFileFactory(0, filesDispatch)}
+                        />
+                        <ImageForm
+                            file={filesState[1].pickedFile}
+                            setFile={setFileFactory(1, filesDispatch)}
+                        />
+                        <ImageForm
+                            file={filesState[2].pickedFile}
+                            setFile={setFileFactory(2, filesDispatch)}
+                        />
+
+                        <Button mt={2} type="submit" onClick={handleFormSubmit}>
+                            Submit
+                        </Button>
                     </Flex>
                 </Flex>
             </Flex>
