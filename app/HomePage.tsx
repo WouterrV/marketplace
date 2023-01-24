@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
+'use client'
+
 // Next, React
 import Head from 'next/head'
 import Image from 'next/image'
